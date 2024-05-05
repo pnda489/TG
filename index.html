@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solana Wallet</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <h1>Solana Wallet</h1>
+    <p>Verbundene Wallet Adresse: <span id="wallet-address"></span></p>
+    <p>SOL Guthaben: <span id="wallet-balance"></span></p>
+
+    <script>
+        const walletAddress = "WALLET_ADDRESS";
+        const solanaWeb3 = require("@solana/web3.js");
+        const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com");
+
+        async function getWalletInfo() {
+            const balance = await connection.getBalance(new solanaWeb3.PublicKey(walletAddress));
+            document.getElementById("wallet-address").textContent = walletAddress;
+            document.getElementById("wallet-balance").textContent = balance / solanaWeb3.LAMPORTS_PER_SOL + " SOL";
+        }
+
+        Telegram.WebApp.ready();
+        getWalletInfo();
+    </script>
+</body>
+</html>
